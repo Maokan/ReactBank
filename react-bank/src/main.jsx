@@ -5,7 +5,7 @@ import './styles/index.css'
 import App from './App.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Register from './Register.jsx'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
