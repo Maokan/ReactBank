@@ -175,9 +175,11 @@ export default function Dashboard() {
                     <a 
                       href="#" 
                       onClick={(e) => {
-                        e.preventDefault();
-                        navigate(`/account/${account.id || account.account_number || index}`);
-                      }}
+                          e.preventDefault();
+                          const accId = account.id;
+                          if (accId) navigate(`/account/${accId}`);
+                          else alert('Identifiant du compte manquant.');
+                        }}
                       style={{ color: '#646cff', textDecoration: 'none', fontWeight: 500, cursor: 'pointer' }}
                       onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
                       onMouseLeave={(e) => e.target.style.textDecoration = 'none'}
