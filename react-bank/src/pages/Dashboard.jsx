@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Accounts } from '../components/APIRequests.jsx';
+import { User, Accounts, OpenAccount } from '../components/APIRequests.jsx';
 import '../styles/App.css';
 
 export default function Dashboard() {
@@ -8,6 +8,9 @@ export default function Dashboard() {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [modalMessage, setModalMessage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,6 +42,35 @@ export default function Dashboard() {
 
     fetchData();
   }, []);
+
+  const handleOpenAccountClick = () => {
+    setShowModal(true);
+    setModalMessage(null);
+  };
+
+  const handleCreateAccount = async () => {
+    setModalLoading(true);
+    try {
+      const res = await OpenAccount();
+      if (res.ok) {
+        setModalMessage({ type: 'success', text: 'Compte secondaire créé avec succès !' });
+        // Recharger la liste des comptes après 2 secondes
+        setTimeout(() => {
+          setShowModal(false);
+          window.location.reload();
+        }, 2000);
+      } else {
+        setModalMessage({ 
+          type: 'error', 
+          text: `Erreur ${res.status}: ${res.data?.message || 'Impossible de créer le compte'}` 
+        });
+      }
+    } catch (err) {
+      setModalMessage({ type: 'error', text: 'Erreur lors de la création du compte.' });
+    } finally {
+      setModalLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -76,10 +108,7 @@ export default function Dashboard() {
           )}
         </div>
         <button
-          onClick={() => {
-            // TODO: implémenter l'ouverture d'un nouveau compte
-            alert('Ouvrir un compte - À implémenter');
-          }}
+          onClick={handleOpenAccountClick}
           style={{
             padding: '0.75rem 1.5rem',
             backgroundColor: '#646cff',
@@ -97,29 +126,6 @@ export default function Dashboard() {
           onMouseLeave={(e) => e.target.style.backgroundColor = '#646cff'}
         >
           + Ouvrir un compte
-        </button>
-        <button
-          onClick={() => {
-            // TODO: implémenter l'envoi d'argent
-            alert("Envoyer de l'argent - À implémenter");
-          }}
-          style={{
-            padding: '0.75rem 1.5rem',
-            backgroundColor: '#646cff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '1rem',
-            fontWeight: 600,
-            whiteSpace: 'nowrap',
-            marginLeft: '1rem',
-            transition: 'background 0.2s'
-          }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#535bf2'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#646cff'}
-        >
-          - Envoyer de l'argent
         </button>
       </div>
 
@@ -155,7 +161,7 @@ export default function Dashboard() {
                     </a>
                   </td>
                   <td style={{ padding: '0.75rem' }}>{account.type || account.account_type || '-'}</td>
-                  <td style={{ padding: '0.75rem' }}>{account.balance || account.amount || '-'}</td>
+                  <td style={{ padding: '0.75rem' }}>{account.balance || account.amount || '0'}</td>
                   <td style={{ padding: '0.75rem' }}>{account.currency || account.devise || 'EUR'}</td>
                   <td style={{ padding: '0.75rem' }}>
                     <button 
@@ -188,6 +194,107 @@ export default function Dashboard() {
           <p>Aucun compte bancaire disponible.</p>
         )}
       </div>
+
+      {/* Modal pour créer un compte */}
+      {showModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            padding: '2rem',
+            maxWidth: 500,
+            width: '90%',
+            boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)',
+            color: '#333'
+          }}>
+            <h2 style={{ marginTop: 0 }}>Créer un compte secondaire</h2>
+            
+            {!modalMessage ? (
+              <>
+                <p style={{ marginBottom: '1.5rem' }}>
+                  Cliquez sur le bouton ci-dessous pour créer un nouveau compte secondaire.
+                </p>
+
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <button
+                    onClick={handleCreateAccount}
+                    disabled={modalLoading}
+                    style={{
+                      flex: 1,
+                      padding: '0.75rem',
+                      backgroundColor: '#646cff',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: modalLoading ? 'not-allowed' : 'pointer',
+                      fontWeight: 600,
+                      opacity: modalLoading ? 0.7 : 1
+                    }}
+                  >
+                    {modalLoading ? 'Création...' : 'Créer'}
+                  </button>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    disabled={modalLoading}
+                    style={{
+                      flex: 1,
+                      padding: '0.75rem',
+                      backgroundColor: '#ddd',
+                      color: '#333',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: modalLoading ? 'not-allowed' : 'pointer',
+                      fontWeight: 600,
+                      opacity: modalLoading ? 0.7 : 1
+                    }}
+                  >
+                    Annuler
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div>
+                <p style={{
+                  padding: '1rem',
+                  borderRadius: '4px',
+                  backgroundColor: modalMessage.type === 'success' ? '#eaffea' : '#ffeaea',
+                  color: modalMessage.type === 'success' ? '#388e3c' : '#d32f2f',
+                  textAlign: 'center',
+                  marginBottom: '1rem'
+                }}>
+                  {modalMessage.text}
+                </p>
+                <button
+                  onClick={() => setShowModal(false)}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    backgroundColor: '#646cff',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontWeight: 600
+                  }}
+                >
+                  Fermer
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

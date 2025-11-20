@@ -45,3 +45,10 @@ export async function Accounts() {
     method: 'GET'
   });
 }
+
+export async function OpenAccount() {
+  return await apiFetch('http://127.0.0.1:8000/open-account', {
+    method: 'POST',
+    body: JSON.stringify({type: "Secondaire"}),
+  });
+}
