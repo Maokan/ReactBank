@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Accounts, OpenAccount } from '../components/APIRequests.jsx';
+import { User, Accounts, OpenAccount, setToken } from '../components/APIRequests.jsx';
 import '../styles/App.css';
 
 export default function Dashboard() {
@@ -22,7 +22,7 @@ export default function Dashboard() {
         // Récupère les infos utilisateur
         const userRes = await User();
         if (!userRes.ok) {
-          throw new Error(`Erreur ${userRes.status}: Impossible de charger les infos utilisateur`);
+            navigate('/');
         }
         setUser(userRes.data);
         
@@ -46,6 +46,11 @@ export default function Dashboard() {
   const handleOpenAccountClick = () => {
     setShowModal(true);
     setModalMessage(null);
+  };
+
+  const handleLogOutClick = () => {
+    setToken(null);
+    navigate('/');
   };
 
   const handleCreateAccount = async () => {
@@ -93,6 +98,26 @@ export default function Dashboard() {
   return (
     <div style={{ maxWidth: 1000, margin: '0 auto', padding: '2rem' }}>
       <h1>Tableau de bord</h1>
+      <button
+        onClick={handleLogOutClick}
+        style={{
+            padding: '0.75rem 1.5rem',
+            backgroundColor: '#646cff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '1rem',
+            fontWeight: 600,
+            whiteSpace: 'nowrap',
+            marginLeft: '1rem',
+            transition: 'background 0.2s'
+        }}
+        onMouseEnter={(e) => e.target.style.backgroundColor = '#535bf2'}
+        onMouseLeave={(e) => e.target.style.backgroundColor = '#646cff'}
+    >
+        Log out
+    </button>
       
       {/* Infos utilisateur */}
       <div className="card" style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Login, setToken } from './components/APIRequests.jsx';
+import { Login, setToken, getToken } from './components/APIRequests.jsx';
 import './styles/App.css';
 
 export default function App() {
@@ -9,6 +9,13 @@ export default function App() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+
+  // Redirige vers le dashboard si l'utilisateur est déjà connecté
+  useEffect(() => {
+    if (getToken()) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
