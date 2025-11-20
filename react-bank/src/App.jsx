@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Login } from './components/APIRequests.jsx';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Login, setToken, getToken } from './components/APIRequests.jsx';
 import './styles/App.css';
 
 export default function App() {
@@ -7,6 +8,14 @@ export default function App() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  // Redirige vers le dashboard si l'utilisateur est déjà connecté
+  useEffect(() => {
+    if (getToken()) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,9 +23,13 @@ export default function App() {
     setSuccess(false);
     try {
       const res = await Login(mail, password);
-      if (res && res.token) {
-        localStorage.setItem('authToken', res.token);
+      if (res && res.ok && res.data && res.data.token) {
+        setToken(res.data.token);
         setSuccess(true);
+        // redirige vers le dashboard
+        navigate('/dashboard');
+      } else if (res && !res.ok) {
+        setError(`Erreur ${res.status}: ${res.data && res.data.message ? res.data.message : 'Authentification échouée'}`);
       } else {
         setError('Identifiants invalides ou erreur serveur.');
       }
