@@ -1,4 +1,31 @@
-const TOKEN_KEY = 'authToken';
+const fetchUsers = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/infos', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      setUsers(data);
+    } catch (err) {
+      console.error('Erreur:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+export const Register = async (username, mail, password, name, firstname) => {
+  return await apiFetch('http://127.0.0.1:8000/register', {
+    method: 'POST',
+    body: JSON.stringify({username:username,adress_mail:mail,password:password,name:name,first_name:firstname}),
+  });
+  };
+  const TOKEN_KEY = 'authToken';
 
 export function setToken(token) {
   if (token) localStorage.setItem(TOKEN_KEY, token);
