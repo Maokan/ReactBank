@@ -1,68 +1,126 @@
 :root {
+  /* Palette de couleurs */
+  --primary-color: #646cff;
+  --primary-hover: #535bf2;
+  --bg-dark: #242424;
+  --text-light: rgba(255, 255, 255, 0.87);
+  --text-dark: #213547;
+  --bg-light: #ffffff;
+  --button-dark: #1a1a1a;
+  --button-light: #f9f9f9;
+  --border-radius: 8px;
+  --transition: 0.25s ease;
+
+  /* Typographie */
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--text-light);
+  background-color: var(--bg-dark);
 
+  /* Optimisations */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Corps de la page */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+}
+
+/* Titres */
+h1, h2, h3 {
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 2.5rem;
 }
 
+h2 {
+  font-size: 1.8rem;
+}
+
+/* Listes */
+ul, ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+li {
+  margin: 0.5rem 0;
+}
+
+/* Liens */
+a {
+  font-weight: 500;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Paragraphes */
+p {
+  margin: 0.5rem 0;
+}
+
+/* Boutons */
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--primary-color);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--button-dark);
+  color: var(--text-light);
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: all var(--transition);
 }
 
+button:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(100, 108, 255, 0.3);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Mode clair */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
   }
+
   a:hover {
-    color: #747bff;
+    color: var(--primary-hover);
   }
+
   button {
-    background-color: #f9f9f9;
+    background-color: var(--button-light);
+    color: var(--text-dark);
+    border-color: #ddd;
+  }
+
+  button:hover {
+    background-color: var(--primary-color);
+    color: white;
   }
 }

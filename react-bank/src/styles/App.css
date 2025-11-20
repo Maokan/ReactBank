@@ -1,42 +1,88 @@
+/* Conteneur principal */
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+/* Cartes */
+.card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(100, 108, 255, 0.2);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(100, 108, 255, 0.5);
+  box-shadow: 0 8px 16px rgba(100, 108, 255, 0.1);
+}
+
+/* Logo avec effet au survol */
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  height: 6rem;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
 }
 
-@keyframes logo-spin {
+.logo:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 2rem rgba(100, 108, 255, 0.5));
+}
+
+.logo.react:hover {
+  animation: react-spin 2s linear;
+}
+
+/* Animation de rotation */
+@keyframes react-spin {
   from {
-    transform: rotate(0deg);
+    transform: scale(1.1) rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: scale(1.1) rotate(360deg);
   }
 }
 
+/* Animation respectueuse des préférences de mouvement */
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .logo.react {
+    animation: react-spin 20s linear infinite;
   }
 }
 
-.card {
-  padding: 2em;
-}
-
+/* Texte secondaire */
 .read-the-docs {
   color: #888;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
 }
