@@ -73,7 +73,7 @@ export default function HistoriquePage() {
             <tbody>
               {transactions.map((transaction, index) => (
                 <tr key={index} style={{ borderBottom: '1px solid #ddd', backgroundColor: index % 2 === 0 ? '#ffffff' : '#f5f5f5', color: '#333' }}>
-                  <td style={{ padding: '0.75rem' }}>{getAccountNumber(transaction.start_account_id)}</td>
+                  <td style={{ padding: '0.75rem' }}>{getAccountNumber(transaction.start_account_id) || '-'}</td>
                   <td style={{ padding: '0.75rem' }}>{getAccountNumber(transaction.end_account_id) || '-'}</td>
                   <td style={{ padding: '0.75rem' }}>{transaction.amount ?? '0'}€</td>
                   <td style={{ padding: '0.75rem' }}>{transaction.type || '-'}</td>

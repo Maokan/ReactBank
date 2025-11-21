@@ -16,19 +16,34 @@ export function getToken() {
 }
 
 export async function apiFetch(url, options = {}) {
+  // Récupère le token d'authentification stocké en local
   const token = getToken();
+  
+  // Crée un objet headers en copiant ceux existants s'il y en a
   const headers = Object.assign({}, options.headers || {});
+  
+  // Si on a un token, l'ajoute dans l'Authorization header avec le format Bearer
   if (token) headers['Authorization'] = `Bearer ${token}`;
+  
+  // Ajoute le Content-Type application/json s'il n'est pas déjà défini
+  // (sauf si on envoie un FormData qui a son propre Content-Type)
   if (!headers['Content-Type'] && !(options && options.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json';
   }
 
+  // Effectue la requête fetch avec l'URL, les options et les headers
   const res = await fetch(url, Object.assign({}, options, { headers }));
+  
+  // Récupère la réponse en texte
   const text = await res.text();
+  
+  // Essaie de parser la réponse en JSON
   try {
     const data = text ? JSON.parse(text) : null;
+    // Retourne l'état de la réponse, le statut HTTP et les données
     return { ok: res.ok, status: res.status, data };
   } catch (err) {
+    // Si le parsing JSON échoue, retourne la réponse en tant que texte brut
     return { ok: res.ok, status: res.status, data: text };
   }
 }

@@ -32,7 +32,7 @@ export default function AccountDetails() {
                 setLoading(true);
                 setError(null);
 
-                // Vérifie l'utilisateur
+                //Vérifie l'utilisateur
                 const userRes = await User();
                 if (!userRes.ok) {
                     // non authentifié -> retour à la page de login
