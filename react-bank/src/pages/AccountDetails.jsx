@@ -15,7 +15,6 @@ export default function AccountDetails() {
     // États pour les modals
     const [showDepositModal, setShowDepositModal] = useState(false);
     const [showSendModal, setShowSendModal] = useState(false);
-    const [showHistoryModal, setShowHistoryModal] = useState(false);
     const [showCloseModal, setShowCloseModal] = useState(false);
     
     // États pour les formulaires
@@ -74,9 +73,7 @@ export default function AccountDetails() {
             console.error('Erreur chargement transactions:', err);
             navigate('/');
         }
-    };
-
-    // Gestionnaires pour les boutons
+    };    // Gestionnaires pour les boutons
     const handleDeposit = async () => {
         if (!depositAmount || isNaN(depositAmount) || Number(depositAmount) <= 0) {
             setActionMessage({ type: 'error', text: 'Veuillez entrer un montant valide.' });
@@ -175,7 +172,7 @@ export default function AccountDetails() {
             <button onClick={() => navigate(-1)} style={{ marginBottom: '1rem' }}>← Retour</button>
             <button onClick={() => setShowDepositModal(true)} style={{ marginBottom: '1rem', marginLeft: '1rem' }}>Dépôt</button>
             <button onClick={() => setShowSendModal(true)} style={{ marginBottom: '1rem', marginLeft: '1rem' }}>Envoi</button>
-            <button onClick={() => { setShowHistoryModal(true); loadTransactions(); }} style={{ marginBottom: '1rem', marginLeft: '1rem' }}>Historique</button>
+            <button onClick={() => navigate(`/transactions/${id}`)} style={{ marginBottom: '1rem', marginLeft: '1rem' }}>Historique</button>
             <button onClick={() => setShowCloseModal(true)} style={{ marginBottom: '1rem', marginLeft: '1rem' }}>Fermer</button>
             <h1>Détails du compte</h1>
             {account ? (
@@ -256,38 +253,6 @@ export default function AccountDetails() {
                         >
                             {actionLoading ? 'Traitement...' : 'Confirmer'}
                         </button>
-                    </div>
-                </div>
-            )}
-
-            {/* Modal Historique */}
-            {showHistoryModal && (
-                <div className="modal" style={{ display: 'block' }}>
-                    <div className="modal-content" style={{ maxWidth: 600 }}>
-                        <span className="close" onClick={() => setShowHistoryModal(false)}>&times;</span>
-                        <h2>Historique des transactions</h2>
-                        {transactions.length > 0 ? (
-                            <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1rem' }}>
-                                <thead>
-                                    <tr style={{ borderBottom: '2px solid #ddd' }}>
-                                        <th style={{ padding: '0.5rem', textAlign: 'left' }}>Date</th>
-                                        <th style={{ padding: '0.5rem', textAlign: 'left' }}>Type</th>
-                                        <th style={{ padding: '0.5rem', textAlign: 'left' }}>Montant</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {transactions.map((tx, idx) => (
-                                        <tr key={idx} style={{ borderBottom: '1px solid #eee' }}>
-                                            <td style={{ padding: '0.5rem' }}>{tx.date || tx.transaction_date || '-'}</td>
-                                            <td style={{ padding: '0.5rem' }}>{tx.type || tx.transaction_type || '-'}</td>
-                                            <td style={{ padding: '0.5rem' }}>{tx.amount || '0'}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        ) : (
-                            <p>Aucune transaction.</p>
-                        )}
                     </div>
                 </div>
             )}

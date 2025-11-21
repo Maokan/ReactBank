@@ -193,11 +193,11 @@ export default function Dashboard() {
                   <td style={{ padding: '0.75rem' }}>{account.currency || account.devise || 'EUR'}</td>
                   <td style={{ padding: '0.75rem' }}>
                     <button 
-                      onClick={() => {
-                        navigate(`/transactions`);
-                      
-                        // TODO: implémenter la navigation vers l'historique
-                        //alert('Historique des transactions - À implémenter');
+                      onClick={(e) => {
+                          e.preventDefault();
+                          const accId = account.id;
+                          if (accId) navigate(`/transactions/${accId}`);
+                          else alert('Identifiant du compte manquant.');
                       }}
                       style={{
                         padding: '0.5rem 1rem',

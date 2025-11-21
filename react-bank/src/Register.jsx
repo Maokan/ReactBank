@@ -82,7 +82,7 @@ export default function RegisterPage() {
           />
         </div>
         <button type="submit" className="login-btn">
-          Créer mon compte de FDP
+          Créer mon compte utilisateur
         </button>
       </form>
       {error && <p className="login-error">{error}</p>}

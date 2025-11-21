@@ -1,24 +1,39 @@
 //pour lancer le serveur = "cd my-react-app" puis "npm run dev"
 //import './App.css'
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Accounts, Historique } from '../components/APIRequests.jsx';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Transactions, Accounts } from '../components/APIRequests.jsx';
 
 export default function HistoriquePage() {
+  const { id } = useParams();
   const [accounts, setAccounts] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  // Fonction helper pour trouver le numéro de compte
+  const getAccountNumber = (accountId) => {
+    for (let i = 0; i < accounts.length; i++) {
+      if (accounts[i].id === accountId) {
+        return accounts[i].account_number;
+      }
+    }
+    return '-';
+  };
 
   useEffect(() => {
     let mounted = true;
     async function load() {
       try {
-        const res = await Accounts();
+        const res = await Transactions(id);
         if (!res || res.ok === false) {
-          throw new Error(`Erreur ${res ? res.status : 'unknown'}: Impossible de charger les comptes`);
+          throw new Error(`Erreur ${res ? res.status : 'unknown'}: Impossible de charger les transactions.`);
         }
-        if (mounted) setAccounts(Array.isArray(res.data) ? res.data : []);
+        if (mounted) setTransactions(Array.isArray(res.data) ? res.data : []);
+        
+        const accountsRes = await Accounts();
+        if (mounted) setAccounts(Array.isArray(accountsRes.data) ? accountsRes.data : []);
       } catch (err) {
         console.error('Erreur:', err);
         if (mounted) setError(err.message || String(err));
@@ -38,38 +53,31 @@ export default function HistoriquePage() {
     /* Liste des comptes */
     <div>
         <div>
-        <button type="button" className="direction-login" onClick={() => navigate('/dashboard')}>
+        <button type="button" className="direction-login" onClick={() => navigate(-1)}>
         Retour
     </button>
         </div>
       <div className="card">
-        <h2>Historique des Transactions du compte $ </h2>
-        {accounts.length > 0 ? (
+        <h2>Historique des Transactions du compte </h2>
+        {transactions.length > 0 ? (
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ backgroundColor: '#646cff', color: 'white' }}>
-                <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Numéro de compte</th>
-                <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Destinataire</th>
+                <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Compte de Départ</th>
+                <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Compte d'Arrivée</th>
                 <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Montant</th>
-                <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Actions</th>
+                <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Type</th>
+                <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Date</th>
               </tr>
             </thead>
             <tbody>
-              {accounts.map((account, index) => (
+              {transactions.map((transaction, index) => (
                 <tr key={index} style={{ borderBottom: '1px solid #ddd', backgroundColor: index % 2 === 0 ? '#ffffff' : '#f5f5f5', color: '#333' }}>
-                  <td style={{ padding: '0.75rem' }}>
-                    <a 
-                      href="#" 
-                      onClick={(e) => { e.preventDefault(); navigate(`/account/${account.id || account.account_number || index}`); }}
-                      style={{ color: '#646cff', textDecoration: 'none', fontWeight: 500, cursor: 'pointer' }}
-                      onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
-                      onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
-                    >
-                      {account.account_number || account.number || '-'}
-                    </a>
-                  </td>
-                  <td style={{ padding: '0.75rem' }}>{account.type || account.account_type || '-'}</td>
-                  <td style={{ padding: '0.75rem' }}>{account.balance ?? account.amount ?? '0'}€</td>
+                  <td style={{ padding: '0.75rem' }}>{getAccountNumber(transaction.start_account_id)}</td>
+                  <td style={{ padding: '0.75rem' }}>{getAccountNumber(transaction.end_account_id) || '-'}</td>
+                  <td style={{ padding: '0.75rem' }}>{transaction.amount ?? '0'}€</td>
+                  <td style={{ padding: '0.75rem' }}>{transaction.type || '-'}</td>
+                  <td style={{ padding: '0.75rem' }}>{transaction.transaction_date ?? 'Erreur'}</td>
                   <td style={{ padding: '0.75rem' }}>
                     <button 
                       onClick={() => navigate(`/transactions`)}
@@ -96,7 +104,7 @@ export default function HistoriquePage() {
             </tbody>
           </table>
         ) : (
-          <p>Aucun compte bancaire disponible.</p>
+          <p>Aucune transaction disponible.</p>
         )}
       </div>
     </div>

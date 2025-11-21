@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/account/:id" element={<AccountDetails />} />
-        <Route path="/transactions" element={<Historique/>} />
+        <Route path="/transactions/:id" element={<Historique/>} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
