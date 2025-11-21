@@ -53,6 +53,7 @@ export default function AccountDetails() {
                 setAccount(accountRes.data);
             } catch (err) {
                 console.error('Erreur:', err);
+                navigate('/');
                 setError(err.message);
             } finally {
                 setLoading(false);
@@ -71,6 +72,7 @@ export default function AccountDetails() {
             }
         } catch (err) {
             console.error('Erreur chargement transactions:', err);
+            navigate('/');
         }
     };
 
@@ -96,6 +98,7 @@ export default function AccountDetails() {
             }
         } catch (err) {
             setActionMessage({ type: 'error', text: 'Erreur lors du dépôt.' });
+            navigate('/');
         } finally {
             setActionLoading(false);
         }
@@ -123,6 +126,7 @@ export default function AccountDetails() {
             }
         } catch (err) {
             setActionMessage({ type: 'error', text: 'Erreur lors de l\'envoi.' });
+            navigate('/');
         } finally {
             setActionLoading(false);
         }
@@ -142,6 +146,7 @@ export default function AccountDetails() {
             }
         } catch (err) {
             setActionMessage({ type: 'error', text: 'Erreur lors de la fermeture du compte.' });
+            navigate('/');
         } finally {
             setActionLoading(false);
         }

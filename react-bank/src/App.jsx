@@ -12,8 +12,11 @@ export default function App() {
 
   // Redirige vers le dashboard si l'utilisateur est déjà connecté
   useEffect(() => {
-    if (getToken()) {
-      navigate('/dashboard');
+    try {
+      if (User()){
+        navigate('/dashboard');
+      }
+    } catch (err) {
     }
   }, [navigate]);
 

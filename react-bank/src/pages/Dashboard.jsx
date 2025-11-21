@@ -34,6 +34,7 @@ export default function Dashboard() {
         setAccounts(Array.isArray(accountsRes.data) ? accountsRes.data : []);
       } catch (err) {
         console.error('Erreur:', err);
+        navigate('/');
         setError(err.message);
       } finally {
         setLoading(false);
