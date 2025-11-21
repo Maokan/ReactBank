@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { User, Account, Transactions, CloseAccount, Deposit, Send } from '../components/APIRequests.jsx';
+import { User, Account, Transactions, CloseAccount, Deposit, Send, Accounts } from '../components/APIRequests.jsx';
 import '../styles/App.css';
 
 export default function AccountDetails() {
@@ -8,6 +8,7 @@ export default function AccountDetails() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [account, setAccount] = useState(null);
+    const [accounts, setAccounts] = useState(null);
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -50,9 +51,11 @@ export default function AccountDetails() {
                     throw new Error(`Erreur ${accountRes.status}: Impossible de charger le compte`);
                 }
                 setAccount(accountRes.data);
+                const accountsRes = await Accounts();
+                setAccounts(Array.isArray(accountsRes.data) ? accountsRes.data : []);
             } catch (err) {
                 console.error('Erreur:', err);
-                navigate('/');
+                //navigate('/');
                 setError(err.message);
             } finally {
                 setLoading(false);
@@ -61,6 +64,15 @@ export default function AccountDetails() {
 
         fetchData();
     }, [id, navigate]);
+
+    const getAccountid = (accountNumber) => {
+        for (let i = 0; i < accounts.length; i++) {
+        if (accounts[i].account_number === accountNumber) {
+            return accounts[i].id;
+        }
+        }
+        return '-';
+    };
 
     // Fonction pour charger les transactions
     const loadTransactions = async () => {
@@ -108,7 +120,7 @@ export default function AccountDetails() {
         }
         setActionLoading(true);
         try {
-            const res = await Send(id, sendReceiverId, Number(sendAmount));
+            const res = await Send(id, getAccountid(sendReceiverId), Number(sendAmount));
             if (res.ok) {
                 setActionMessage({ type: 'success', text: 'Envoi effectué avec succès !' });
                 setSendReceiverId('');
@@ -226,7 +238,7 @@ export default function AccountDetails() {
                         <h2>Envoyer de l'argent</h2>
                         <input
                             type="text"
-                            placeholder="ID du compte destinataire"
+                            placeholder="Numéro du compte destinataire"
                             value={sendReceiverId}
                             onChange={(e) => setSendReceiverId(e.target.value)}
                             className="login-input"
