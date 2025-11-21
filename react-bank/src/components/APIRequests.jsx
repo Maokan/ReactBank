@@ -79,3 +79,8 @@ export async function OpenAccount() {
     body: JSON.stringify({type: "Secondaire"}),
   });
 }
+ export const Historique = async () => {
+  return await apiFetch('http://127.0.0.1:8000/transactions', { //{account_id},
+    method: 'GET'
+  });
+ }

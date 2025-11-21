@@ -191,8 +191,10 @@ export default function Dashboard() {
                   <td style={{ padding: '0.75rem' }}>
                     <button 
                       onClick={() => {
+                        navigate(`/transactions`);
+                      
                         // TODO: implémenter la navigation vers l'historique
-                        alert('Historique des transactions - À implémenter');
+                        //alert('Historique des transactions - À implémenter');
                       }}
                       style={{
                         padding: '0.5rem 1rem',
@@ -207,6 +209,7 @@ export default function Dashboard() {
                       }}
                       onMouseEnter={(e) => e.target.style.backgroundColor = '#535bf2'}
                       onMouseLeave={(e) => e.target.style.backgroundColor = '#646cff'}
+                      
                     >
                       Historique
                     </button>

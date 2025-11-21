@@ -16,6 +16,8 @@ export default function App() {
       navigate('/dashboard');
     }
   }, [navigate]);
+  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +41,7 @@ export default function App() {
   };
 
   return (
-    <div className="login-container">
+    <div><div className="login-container">
       <h1>Connexion</h1>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
@@ -50,8 +52,7 @@ export default function App() {
             value={mail}
             onChange={e => setMail(e.target.value)}
             required
-            className="login-input"
-          />
+            className="login-input" />
         </div>
         <div className="form-group">
           <label htmlFor="password">Mot de passe</label>
@@ -61,8 +62,7 @@ export default function App() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
-            className="login-input"
-          />
+            className="login-input" />
         </div>
         <button type="submit" className="login-btn">
           Se connecter
@@ -70,6 +70,10 @@ export default function App() {
       </form>
       {error && <p className="login-error">{error}</p>}
       {success && <p className="login-success">Connexion réussie !</p>}
+    </div>
+        <button type="button" className="direction-register" onClick={() => navigate('/register')}>
+          Vous n'avez pas de compte utilisateur ?<br/>Inscrivez-vous ici !
+        </button>
     </div>
   );
 }

@@ -38,6 +38,7 @@ export default function RegisterPage() {
     }
     }
   return (
+    <div>
     <div className="login-container">
       <h1>Création de votre compte d'utilisateur</h1>
       <form onSubmit={handleSubmit} className="login-form">
@@ -86,6 +87,12 @@ export default function RegisterPage() {
       </form>
       {error && <p className="login-error">{error}</p>}
       {success && <p className="login-success">Inscription réussie !</p>}
+    </div>
+    <div>
+    <button type="button" className="direction-login" onClick={() => navigate('/')}>
+          Vous avez déjà un compte utilisateur ?<br/>Connectez-vous ici !
+    </button>
+    </div>
     </div>
   );
 }
