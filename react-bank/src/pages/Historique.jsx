@@ -12,8 +12,7 @@ export default function HistoriquePage() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Fonction helper pour trouver le numéro de compte
-  const getAccountNumber = (accountId) => {
+const getAccountNumber = (accountId) => {
     for (let i = 0; i < accounts.length; i++) {
       if (accounts[i].id === accountId) {
         return accounts[i].account_number;
@@ -68,6 +67,7 @@ export default function HistoriquePage() {
                 <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Montant</th>
                 <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Type</th>
                 <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}>Date</th>
+                <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '2px solid #535bf2' }}></th>
               </tr>
             </thead>
             <tbody>
