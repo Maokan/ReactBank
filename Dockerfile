@@ -1,5 +1,5 @@
 # 1. Image de base
-FROM node:18-alpine
+FROM node:20-alpine
 # 2. Métadonnées (facultatif)
 LABEL maintainer="ceci est un dockerfille (j'crois)"
 # 3. Variables d’environnement
