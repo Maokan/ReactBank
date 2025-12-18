@@ -8,7 +8,9 @@ ENV NODE_ENV=production
 WORKDIR /app
 # 5. Dépendances en premier (important pour le cache)
 COPY package*.json ./
-RUN nvm install 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc && \
+    rm -rf /var/lib/apt/lists/*
 # 6. Copie du code
 COPY . .
 # 7. Exposition du port
