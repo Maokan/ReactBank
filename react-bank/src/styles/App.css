@@ -1,0 +1,161 @@
+/* --- Login page custom styles --- */
+.login-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: var(--bg-light, #fff);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(100, 108, 255, 0.08);
+  color: var(--text-dark, #213547);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-input {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+  background: var(--button-light, #f9f9f9);
+  color: var(--text-dark, #213547);
+  transition: border-color 0.2s;
+}
+
+.login-input:focus {
+  border-color: var(--primary-color, #646cff);
+  outline: none;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--primary-color, #646cff);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.login-btn:hover {
+  background: var(--primary-hover, #535bf2);
+}
+
+.login-error {
+  color: #d32f2f;
+  background: #ffeaea;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.login-success {
+  color: #388e3c;
+  background: #eaffea;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+/* Conteneur principal */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Cartes */
+.card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(100, 108, 255, 0.2);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(100, 108, 255, 0.5);
+  box-shadow: 0 8px 16px rgba(100, 108, 255, 0.1);
+}
+
+/* Logo avec effet au survol */
+.logo {
+  height: 6rem;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 2rem rgba(100, 108, 255, 0.5));
+}
+
+.logo.react:hover {
+  animation: react-spin 2s linear;
+}
+
+/* Animation de rotation */
+@keyframes react-spin {
+  from {
+    transform: scale(1.1) rotate(0deg);
+  }
+  to {
+    transform: scale(1.1) rotate(360deg);
+  }
+}
+
+/* Animation respectueuse des préférences de mouvement */
+@media (prefers-reduced-motion: no-preference) {
+  .logo.react {
+    animation: react-spin 20s linear infinite;
+  }
+}
+
+/* Texte secondaire */
+.read-the-docs {
+  color: #888;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
