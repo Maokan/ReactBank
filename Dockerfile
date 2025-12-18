@@ -7,8 +7,8 @@ ENV NODE_ENV=production
 # 4. Répertoire de travail
 WORKDIR /app
 # 5. Dépendances en premier (important pour le cache)
-#COPY react-bank/package-lock.json ./
-#RUN npm install 
+COPY react-bank/package-lock.json ./
+RUN npm install 
 # 6. Copie du code
 COPY . .
 # 7. Exposition du port
