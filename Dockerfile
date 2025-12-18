@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 # 6. Copie du code
-COPY ..
+COPY . .
 # 7. Exposition du port
 EXPOSE 3000
 # 8. Commande de démarrage
