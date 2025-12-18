@@ -1,10 +1,10 @@
-.. doc documentation master file, created by
-   sphinx-quickstart on Thu Dec 18 16:38:15 2025.
+.. Docs documentation master file, created by
+   sphinx-quickstart on Thu Dec 18 17:39:40 2025.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-doc documentation
-=================
+Docs documentation
+==================
 
 Add your content using ``reStructuredText`` syntax. See the
 `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
