@@ -10,7 +10,6 @@ jobs:
 
     permissions:
       contents: read
-      Metadata: read
       packages: write
 
     steps:
