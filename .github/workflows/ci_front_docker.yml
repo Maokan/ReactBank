@@ -25,3 +25,11 @@ jobs:
         run: |
           docker build -t ghcr.io/maokan/reactbank:latest .
           docker push ghcr.io/maokan/reactbank:latest
+
+
+       - name: generate la grosse SDFGJHKEDLAE artifacts 
+	 run: | 
+	 pip install sphinx
+	 cd docs
+	 make html
+	
