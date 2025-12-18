@@ -27,7 +27,7 @@ jobs:
           docker push ghcr.io/maokan/reactbank:latest
 
       - name: generate artifacts 
-	run: | 
+	run: |
 	 pip install sphinx
 	 cd docs
 	 make html
