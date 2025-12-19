@@ -23,4 +23,4 @@ COPY react-bank/ .
 EXPOSE 3000
 
 # launch command
-CMD ["npm", "start"] 
+CMD ["npm", "run","dev"] 
