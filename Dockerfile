@@ -5,7 +5,7 @@ FROM node:20-alpine
 LABEL maintainer="ceci est un dockerfille (j'crois)"
 
 # environement
-ENV NODE_ENV=production
+#ENV NODE_ENV=production
 
 # switch to the project, repertory
 WORKDIR /app
