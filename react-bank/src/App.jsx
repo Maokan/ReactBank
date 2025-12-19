@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Login, setToken, getToken } from './components/APIRequests.jsx';
+import { Login, setToken } from './components/APIRequests.jsx';
 import './styles/App.css';
 
 export default function App() {

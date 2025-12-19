@@ -2,8 +2,7 @@
 // Source - https://stackoverflow.com/q
 // Posted by TarekBouhairi, modified by community. See post 'Timeline' for change history
 // Retrieved 2025-11-20, License - CC BY-SA 4mport.0
-import { useEffect, useState } from 'react';
-import React, { Component } from "react";
+import {useState } from 'react';
 import { Register } from './components/APIRequests.jsx';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 export default function RegisterPage() {
   const [name, setName] = useState('');
   const [firstname, setFirstName] = useState('');
-  const [username, setUsername] = useState('');
   const [mail, setMail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
