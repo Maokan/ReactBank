@@ -1,26 +1,26 @@
-#Image de base
+# Base Image
 FROM node:20-alpine
 
-#info supplémentaire dans les métadata de l'image
+#supplementary informations for image's metadata
 LABEL maintainer="ceci est un dockerfille (j'crois)"
 
-#Variables d’environnement
+# environement
 ENV NODE_ENV=production
 
-#change sur le répertoire du projet
+# switch to the project, repertory
 WORKDIR /app
 
-# récupère les infos du projets
+# get informations about the project
 COPY react-bank/package.json ./
 
-# installe NPM
+# install NPM
 RUN npm install
 
-#récupère tous le code
+# get all the project's files
 COPY . .
 
-# utilise le port 3000
+# use port 3000
 EXPOSE 3000
 
-# Commande de démarrage
+# launch command
 CMD ["npm", "start"] 
