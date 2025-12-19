@@ -17,7 +17,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: leaspeter
-          password: dckr_pat_0pmBYFd2V8vFtn0h1bzSTmPKY-I
+          password: dckr_pat_zQltFk8dg3hBDfu737MGAsx6pk0
 
       - name: Build and Push image
         uses: docker/build-push-action@v5
