@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'Docs'
-copyright = '2025, Swann'
+copyright = '2025, Swann & Léa'
 author = 'Swann'
 release = 'YES'
 

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Transactions, Accounts } from '../components/APIRequests.jsx';
 
 export default function HistoriquePage() {
+  
   const { id } = useParams();
   const [accounts, setAccounts] = useState([]);
   const [transactions, setTransactions] = useState([]);

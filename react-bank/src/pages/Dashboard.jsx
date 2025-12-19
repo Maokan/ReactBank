@@ -4,6 +4,7 @@ import { User, Accounts, OpenAccount, setToken } from '../components/APIRequests
 import '../styles/App.css';
 
 export default function Dashboard() {
+  
   const [user, setUser] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
