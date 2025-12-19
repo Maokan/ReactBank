@@ -17,7 +17,7 @@ COPY react-bank/package.json ./
 RUN npm install
 
 # get all the project's files
-COPY . .
+COPY react-bank/ .
 
 # use port 3000
 EXPOSE 3000
