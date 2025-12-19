@@ -14,7 +14,7 @@ WORKDIR /app
 COPY react-bank/package.json ./
 
 # install NPM
-RUN npm install
+RUN npm run build
 
 # get all the project's files
 COPY react-bank/ .
